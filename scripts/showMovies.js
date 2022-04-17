@@ -1,14 +1,7 @@
-const main = document.getElementById('main');
-const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 import { getcolor } from './view.js';
-export function getMovies(url) {
-    fetch(url).then(res => res.json()).then(data => {
-        console.log(data.results);
-        showMovies(data.results);
 
-    })
-}
-function showMovies(data) {
+const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+export function showMovies(data) {
 
     main.innerHTML = '';
 
@@ -37,4 +30,3 @@ function showMovies(data) {
     })
 
 }
-
