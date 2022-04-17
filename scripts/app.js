@@ -1,4 +1,5 @@
 import { getMovies } from './http.js';
+import { displaySearch } from './view.js';
 
 
 
@@ -8,16 +9,20 @@ const API_URL = BASE_URL + '/discover/movie?sort_by=popularity.desc&' + API_KEY;
 
 const searchURL = BASE_URL + '/search/movie?' + API_KEY;
 
-
 const form = document.getElementById('form');
 const search = document.getElementById('search');
 
 
+let movieList = localStorage.getItem('moviesList') ? JSON.parse(localStorage.getItem('moviesList')) : [];
+
+// console.log(JSON.parse(movieList));
 
 
-// window.start = showMovies(data);
-// window.addEventListener('load', start);
-start = getMovies(API_URL);
+
+window.start = () => {
+    getMovies(API_URL);
+    displaySearch(movieList);
+}
 window.addEventListener('load', start);
 
 form.addEventListener('submit', (e) => {
@@ -25,10 +30,21 @@ form.addEventListener('submit', (e) => {
     const searchTerm = search.value;
 
     if (searchTerm) {
+        movieList.push(searchTerm);
+        console.log(movieList);
+        localStorage.setItem('moviesList', JSON.stringify(movieList));
         getMovies(searchURL + '&query=' + searchTerm)
+        displaySearch(movieList);
+
     } else {
         getMovies(API_URL);
     }
 
+
 })
+
+
+
+
+
 
